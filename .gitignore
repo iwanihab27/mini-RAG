@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Environment variables
+.env
+.envrc
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+
+# Others
+*.log
+
+#db
+mongodb
