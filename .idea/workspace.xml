@@ -5,39 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/mini-rag-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/files.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/BaseController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/DataControllers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/ProcessController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/ProjectController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/BaseDataModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/ProjectModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/db_schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/db_schemas/data_chunk.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/db_schemas/project.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/enums/DataBaseEnum.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/enums/ProcessingEnums.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/enums/ResponsEnums.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/enums/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/schemas/data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/ChunkModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +49,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -107,7 +77,8 @@
       <workItem from="1770284039640" duration="22209000" />
       <workItem from="1770401318711" duration="2683000" />
       <workItem from="1770411436673" duration="10501000" />
-      <workItem from="1770573588131" duration="19886000" />
+      <workItem from="1770573588131" duration="20217000" />
+      <workItem from="1770661990879" duration="10030000" />
     </task>
     <servers />
   </component>
