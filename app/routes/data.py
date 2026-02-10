@@ -8,8 +8,10 @@ from app.models.enums import ResponseEnum
 import logging
 from app.routes.schemas.data import ProcessRequest
 from app.models.ProjectModel import ProjectModel
-from app.models.db_schemas import DataChunk
+from app.models.db_schemas import DataChunk, Asset
 from app.models.ChunkModel import ChunkModel
+from app.models.AssetModel import AssetModel
+from app.models.enums.AssetTypeEnum import AssetTypeEnum
 
 
 
@@ -65,11 +67,24 @@ async def upload_data(request: Request, project_id: str, file: UploadFile,
             }
         )
 
+    #store the assets into the DB
+    asset_model = await AssetModel.create_instance(
+        db_client=request.app.db_client
+    )
+    asset_rescource = Asset(
+        asset_project_id=project.id,
+        asset_type=AssetTypeEnum.File.value,
+        asset_name=file_id,
+        asset_size= os.path.getsize(file_path)
+    )
+
+    asset_record = await asset_model.create_asset(asset=asset_rescource)
+
     return JSONResponse(
            status_code=status.HTTP_201_CREATED,
            content={
                    "signal": ResponseEnum.FILE_UPLOAD_SUCCESS.value,
-                   "file_id": file_id,
+                   "file_id": str(asset_record.id),
            }
            )
 
