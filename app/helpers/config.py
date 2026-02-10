@@ -10,13 +10,16 @@ class Settings(BaseSettings):
 
     FILE_ALLOWED_TYPES: list[str]
     FILE_MAX_SIZE: int
-    FILE_DEFAULT_CHUNK_SIZE: Optional[str] = None
+    FILE_DEFAULT_CHUNK_SIZE: Optional[int] = None
+    FILE_CHUNK_SIZE: Optional[int] = None
 
     MONGODB_URL: str
     MONGODB_DB: str
 
+
     class Config:
         env_file = ".env"
+        env_nested_delimiter = ","
 
 def get_settings():
     return Settings()

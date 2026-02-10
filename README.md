@@ -13,3 +13,11 @@ cp .env.example .env
 ```
 
 Set your environment variables in the `.env` file, like the `OPENAI_API_KEY` value.
+
+
+## Run Docker compose service
+```bash
+$ cd docker
+$ cp .env.example .env
+```
+- update .env with your credentials

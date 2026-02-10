@@ -22,11 +22,11 @@ DataRouter = APIRouter(
 )
 
 
-@DataRouter.post("/upload/{Project_ID}")
+@DataRouter.post("/upload/Project_ID")
 async def upload_data(request: Request, project_id: str, file: UploadFile,
                       app_settings: Settings = Depends(get_settings)):
 
-    project_model = ProjectModel(
+    project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
     )
 
@@ -44,7 +44,7 @@ async def upload_data(request: Request, project_id: str, file: UploadFile,
                 "signal": result_signal
             }
         )
-    project_dir_path = ProjectController().get_project_path(Project_id=project_id)
+    project_dir_path = ProjectController().get_project_path(project_id=project_id)
     file_path, file_id = data_controller.generate_uniqe_filepath(
         orig_filename=file.filename,
         project_id=project_id,
@@ -74,23 +74,23 @@ async def upload_data(request: Request, project_id: str, file: UploadFile,
            )
 
 
-@DataRouter.post("/process/{Project_ID} ")
-async def process_endpoint(Project_id: str, ProcessRequest: ProcessRequest, request: Request):
+@DataRouter.post("/process/Project_ID ")
+async def process_endpoint(Project_ID: str, processRequest: ProcessRequest, request: Request):
 
-    file_id = ProcessRequest.file_id
-    chunk_size = ProcessRequest.chunk_size
-    overlap_size = ProcessRequest.overlap_size
-    do_reset = ProcessRequest.do_reset
+    file_id = processRequest.file_id
+    chunk_size = processRequest.chunk_size
+    overlap_size = processRequest.overlap_size
+    do_reset = processRequest.do_reset
 
-    project_model = ProjectModel(
+    project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
     )
 
     project = await project_model.get_project_or_create_one(
-        project_id=Project_id
+        project_id=Project_ID
     )
 
-    process_controller = ProcessController(Project_id=Project_id)
+    process_controller = ProcessController(project_id=Project_ID)
 
     file_content = process_controller.get_file_content(file_id=file_id)
 
@@ -120,7 +120,7 @@ async def process_endpoint(Project_id: str, ProcessRequest: ProcessRequest, requ
         for i, chunk in enumerate(file_chunks)
     ]
 
-    chunk_model = ChunkModel(
+    chunk_model = await ChunkModel.create_instance(
         db_client=request.app.db_client
     )
 
@@ -129,7 +129,7 @@ async def process_endpoint(Project_id: str, ProcessRequest: ProcessRequest, requ
             project_id=project.id
         )
 
-    no_records = chunk_model.insert_many_chunks(chunks=file_chunks_record)
+    no_records = await chunk_model.insert_many_chunks(chunks=file_chunks_record)
 
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED,

@@ -9,7 +9,7 @@ services:
       - "27007:27017"
 
     volumes:
-      - ./mongodb:/data/db
+      - mongodata:/data/db
 
     networks:
       - backend
@@ -18,3 +18,8 @@ services:
 
 networks:
   backend:
+
+volumes:
+  mongodata:
+
+
