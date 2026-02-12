@@ -12,3 +12,4 @@ pymupdf==1.24.9
 motor==3.7.1
 pymongo>=4.9,<5.0
 langchain[unstructured]>=1.2.5,<2.0.0
+openai==1.35.13

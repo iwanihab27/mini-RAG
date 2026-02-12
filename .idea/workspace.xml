@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/BaseController.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/BaseController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/DataControllers.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/DataControllers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/ProjectController.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/ProjectController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ProjectModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ProjectModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/schemas/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/schemas/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +78,8 @@
       <workItem from="1770573588131" duration="20217000" />
       <workItem from="1770661990879" duration="11065000" />
       <workItem from="1770717567431" duration="32095000" />
+      <workItem from="1770826634565" duration="3150000" />
+      <workItem from="1770845219020" duration="6414000" />
     </task>
     <servers />
   </component>
