@@ -1,7 +1,7 @@
 from qdrant_client import QdrantClient, models
 from app.stores.vectordb.VectorDBInterface import VectorDBInterface
 import logging
-from ..VectorDBEnums import DistanceMethodEnum
+from ..VectorDBEnums import DistanceMethodEnums
 from typing import List
 
 
@@ -13,9 +13,9 @@ class QdrantDBProvider(VectorDBInterface):
         self.db_path = db_path
         self.distance_method = None
 
-        if  distance_method == DistanceMethodEnum.COSINE.value:
+        if  distance_method == DistanceMethodEnums.COSINE.value:
             self.distance_method = models.Distance.COSINE
-        elif distance_method == DistanceMethodEnum.DOT.value:
+        elif distance_method == DistanceMethodEnums.DOT.value:
             self.distance_method = models.Distance.DOT
 
         self.logger = logging.getLogger(__name__)

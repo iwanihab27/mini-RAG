@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/stores/vectordb/VectorDBEnums.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/vectordb/VectorDBInterface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/vectordb/VectorDBProviderFactory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/vectordb/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/vectordb/providers/QdrantDBProvider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/BaseController.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/BaseController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/LLM/providers/CohereProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/providers/CohereProvider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/LLM/providers/OPENAIProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/providers/OPENAIProvider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/LLMEnums.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLMEnums.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/LLMProviderFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLMProviderFactory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +81,7 @@
       <workItem from="1770826634565" duration="3150000" />
       <workItem from="1770845219020" duration="6414000" />
       <workItem from="1770994981114" duration="9925000" />
-      <workItem from="1771097811891" duration="12883000" />
+      <workItem from="1771097811891" duration="14359000" />
     </task>
     <servers />
   </component>
