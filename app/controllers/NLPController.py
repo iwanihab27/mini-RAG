@@ -83,6 +83,23 @@ class NLPController(BaseController):
         if not result:
             return False
 
-        return json.loads(
-            json.dumps(result, default=lambda x: x.__dict__())
-        )
+        return result
+
+    def answer_rag_question(self, project: Project, query: str, limit: int = 10):
+
+        #step1 retrieve related docs
+        retrieved_documents = self.search_vector_db_collection(
+                project=project, text=query, limit=limit)
+
+        if not retrieved_documents or len(retrieved_documents) == 0:
+            return None
+
+        #step2 construct LLM prompt
+        system_prompt = """
+            you are an assistant to generate a response for the user .
+         
+            you will be provided a set of documents .
+         
+            you have to generate a response based on the documents provided.
+         
+        """
