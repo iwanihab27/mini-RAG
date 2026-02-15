@@ -1,5 +1,5 @@
 from pymupdf import message
-from app.stores import LLM_interface
+from app.stores.LLM_interface import LLM_interface
 from app.stores.LLMEnums import CohereEnums, DocumentTypeEnums
 import cohere
 import logging
@@ -23,7 +23,7 @@ class CohereProvider(LLM_interface):
         self.embedding_model_id = None
         self.embedding_size = None
 
-        self.client = cohere.client(api_key= self.api_key)
+        self.client = cohere.Client(api_key= self.api_key)
 
         self.logger = logging.getLogger(__name__)
 

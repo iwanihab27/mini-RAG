@@ -1,10 +1,10 @@
-from app.stores import LLM_interface
+from app.stores.LLM_interface import LLM_interface
 from openai import OpenAI
 import logging
 from app.stores.LLMEnums import LLMEnums, OPENAIEnums
 
 
-class LLMProvider(LLM_interface):
+class OPENAIProvider(LLM_interface):
 
     def __init__(self,  api_key: str, api_url: str=None,
                         default_input_max_characters: int=1000,
@@ -23,10 +23,10 @@ class LLMProvider(LLM_interface):
         self.embedding_model_id = None
         self.embedding_size = None
 
-        self.client = OpenAI(
-            api_key = self.api_key,
-            api_url = self.api_url
-        )
+        if self.api_url:
+            self.client = OpenAI(api_key=self.api_key, base_url=self.api_url)
+        else:
+            self.client = OpenAI(api_key=self.api_key)
 
         self.logger = logging.getLogger(__name__)
 

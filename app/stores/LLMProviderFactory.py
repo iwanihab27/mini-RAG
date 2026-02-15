@@ -1,5 +1,6 @@
 from app.stores.LLMEnums import CohereEnums, DocumentTypeEnums, LLMEnums
-from app.stores.LLM.providers import CohereProvider, OPENAIProvider
+from app.stores.LLM.providers.CohereProvider import CohereProvider
+from app.stores.LLM.providers.OPENAIProvider import OPENAIProvider
 
 
 class LLMProviderFactory:

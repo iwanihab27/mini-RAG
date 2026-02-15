@@ -76,6 +76,7 @@ class QdrantDBProvider(VectorDBInterface):
                 collection_name=collection_name,
                 records=[
                     models.Record(
+                        id=[record_id],
                         vector=vector,
                         payload={
                             "text": text, "metadata": metadata
@@ -92,14 +93,14 @@ class QdrantDBProvider(VectorDBInterface):
 
     def insert_many(self, collection_name: str, text: list, vector: list,
                     metadata: list = None,
-                    record_id: str = None,
-                    batch_size: int = 50, ):
+                    record_ids: str = None,
+                    batch_size: int = 50,):
 
         if metadata is None:
-            metadata = [None] * len(text)
+            metadata = list(range(0, len(text)))
 
-        if record_id is None:
-            record_id = [None] * len(text)
+        if record_ids is None:
+            record_ids = [None] * len(text)
 
         for i in range(0, len(text), batch_size):  # kol mara not 50
             batch_end = i + batch_size
@@ -107,9 +108,11 @@ class QdrantDBProvider(VectorDBInterface):
             batch_texts = text[i:batch_end]
             batch_vectors = vector[i:batch_end]
             batch_metadata = metadata[i:batch_end]
+            batch_records_ids = record_ids[i:batch_end]
 
             batch_records = [
                 models.Record(
+                    id=batch_records_ids[x],
                     vector=batch_vectors[x],
                     payload={
                         "text": batch_texts[x], "metadata": batch_metadata[x]
