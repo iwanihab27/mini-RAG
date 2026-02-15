@@ -9,7 +9,7 @@ pip install -r requirements.txt
 
 ## Setup environment variables
 ```bash
-cp .env.example .env
+cp .env.example.env
 ```
 
 Set your environment variables in the `.env` file, like the `OPENAI_API_KEY` value.

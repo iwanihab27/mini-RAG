@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/vectordb/providers/QdrantDBProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/vectordb/providers/QdrantDBProvider.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +83,8 @@
       <workItem from="1770826634565" duration="3150000" />
       <workItem from="1770845219020" duration="6414000" />
       <workItem from="1770994981114" duration="9925000" />
-      <workItem from="1771097811891" duration="14359000" />
+      <workItem from="1771097811891" duration="15366000" />
+      <workItem from="1771148249287" duration="2330000" />
     </task>
     <servers />
   </component>

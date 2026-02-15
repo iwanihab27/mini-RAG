@@ -39,6 +39,10 @@ class QdrantDBProvider(VectorDBInterface):
         if self.is_collection_existed(collection_name):
             return self.client.delete_collection(collection_name=collection_name)
 
+        if not self.is_collection_existed(collection_name):
+            self.logger.error("there is no collection to delete")
+            return None
+
     def create_collection(self, collection_name: str,
                                 embedding_size: int,
                                 do_reset: bool = False, ):
