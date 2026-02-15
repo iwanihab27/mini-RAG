@@ -40,7 +40,7 @@ class LLMProvider(LLM_interface):
     def process_text(self, text: str,):
         return text[:self.default_input_max_characters].strip()
 
-    def generate_text(self, prompt: str, char_history: list = [], max_output_token: int = None,
+    def generate_text(self, prompt: str, chat_history: list = [], max_output_token: int = None,
                           temperature: float = None):
 
         if not self.client:
@@ -54,13 +54,13 @@ class LLMProvider(LLM_interface):
         max_output_token = max_output_token if max_output_token else self.default_max_output_tokens
         temperature = temperature if temperature else self.default_generation_temperature
 
-        char_history.append(
+        chat_history.append(
             self.construct_prompt(prompt=prompt, role=OPENAIEnums.USER.value)
         )
 
         response = self.client.chat.completions.create(
             model = self.generation_model_id,
-            messages = char_history,
+            messages = chat_history,
             max_tokens = max_output_token,
             temperature = temperature
         )

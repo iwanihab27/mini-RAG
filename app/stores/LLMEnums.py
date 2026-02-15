@@ -16,11 +16,10 @@ class CohereEnums(Enum):
     ASSISTANT = "CHATBOT"
 
     DOCUMENT = "search_document"
-    QUERY = "search_query"
-
+    QUERY = "search_query"               # what the user type
 
 class DocumentTypeEnums(Enum):
     DOCUMENT = "document"
-    QUERY = "query"
+    QUERY = "query"               # what the user type
 
 

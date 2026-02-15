@@ -10,7 +10,7 @@ class CohereProvider(LLM_interface):
     def __init__(self, api_key: str,
                  default_input_max_characters: int = 1000,
                  default_generation_max_output_tokens: int = 1000,
-                 default_generation_temperature: float = 0.1, ):
+                 default_generation_temperature: float = 0.1, ):     # creativity
 
         self.api_key = api_key
 
