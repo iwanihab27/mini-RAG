@@ -5,15 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/Template_parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/Eng/rag.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/ar/rag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/NLPController.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/NLPController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/db_schemas/data_chunk.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/db_schemas/data_chunk.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/enums/ResponsEnums.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/enums/ResponsEnums.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/nlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/nlp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/vectordb/VectorDBInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/vectordb/VectorDBInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/stores/vectordb/providers/QdrantDBProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/vectordb/providers/QdrantDBProvider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/schemas/nlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/schemas/nlp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/LLM/Templates/Template_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/Template_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/Eng/rag.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/Eng/rag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/ar/rag.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/Templates/locales/ar/rag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/LLM/providers/CohereProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/providers/CohereProvider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stores/LLM/providers/OPENAIProvider.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/stores/LLM/providers/OPENAIProvider.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +71,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.29346.308" />
         <option value="bundled-python-sdk-ca5e2b39c7df-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.308" />
       </set>
     </attachedChunks>
@@ -90,7 +93,8 @@
       <workItem from="1770845219020" duration="6414000" />
       <workItem from="1770994981114" duration="9925000" />
       <workItem from="1771097811891" duration="15366000" />
-      <workItem from="1771148249287" duration="25057000" />
+      <workItem from="1771148249287" duration="25351000" />
+      <workItem from="1771233837826" duration="343000" />
     </task>
     <servers />
   </component>

@@ -6,7 +6,7 @@ from jinja2 import Template
 
 #### System ####
 
-system_prompt ="\n".join([
+system_prompt =Template("\n".join([
             "you are an assistant to generate a response for the user .",
          
             "you will be provided a set of documents .",
@@ -15,9 +15,9 @@ system_prompt ="\n".join([
 
             "you can apologize if you do not know the answer.",
 
-            "ypu have to generate response in the same language as the user's query"
+            "you have to generate response in the same language as the user's query"
          
-        ])
+        ]))
 
 #### Document ####
 

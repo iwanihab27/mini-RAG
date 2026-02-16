@@ -6,6 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.helpers.config import get_settings
 from app.stores.LLMProviderFactory import LLMProviderFactory
 from app.stores.vectordb.VectorDBProviderFactory import VectorDBProvider
+from app.stores.LLM.Templates.Template_parser import TemplateParser
 
 
 load_dotenv(".env")
@@ -36,6 +37,10 @@ async def startup_span():
     app.vectordb_client = vectordb_provider_factory.create(provider=settings.VECTOR_DB_BACKEND)
 
     app.vectordb_client.connect()
+
+    app.TemplateParser = TemplateParser(
+        language=settings.DEFAULT_LANGUAGE
+    )
 
 
 async def shutdown_span():

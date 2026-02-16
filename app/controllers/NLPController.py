@@ -7,12 +7,13 @@ import json
 
 
 class NLPController(BaseController):
-    def __init__(self, vectordb_client, generation_client, embedding_client):
+    def __init__(self, vectordb_client, generation_client, embedding_client, TemplateParser):
         super().__init__()
 
         self.vectordb_client = vectordb_client
         self.generation_client = generation_client
         self.embedding_client = embedding_client
+        self.TemplateParser = TemplateParser
 
     def create_collection_name(self, project_id: str):
         return f"projects/{project_id}".strip()
@@ -87,19 +88,51 @@ class NLPController(BaseController):
 
     def answer_rag_question(self, project: Project, query: str, limit: int = 10):
 
+        answer, full_prompt, chat_history = None, None, None
+
         #step1 retrieve related docs
         retrieved_documents = self.search_vector_db_collection(
                 project=project, text=query, limit=limit)
 
         if not retrieved_documents or len(retrieved_documents) == 0:
-            return None
+            return answer, full_prompt, chat_history
 
         #step2 construct LLM prompt
-        system_prompt = """
-            you are an assistant to generate a response for the user .
-         
-            you will be provided a set of documents .
-         
-            you have to generate a response based on the documents provided.
-         
-        """
+        system_prompt = self.Template_parser.get("rag", "system_prompt")
+
+        # document_prompt = []
+        # for idx, doc in enumerate(retrieved_documents):
+        #     document_prompt.append(
+        #         self.Template_parser.get(("rag", "document_prompt", {
+        #             "doc_num": idx + 1,
+        #             "chunk_text": doc.text,
+        #
+        #         })
+        #                                  ))
+
+        document_prompt = "\n".join([
+            self.Template_parser.get("rag", "document_prompt", {
+                "doc_num": idx + 1,
+                "chunk_text": doc.text,
+            })
+            for idx, doc in enumerate(retrieved_documents)
+        ])
+
+        footer_prompt =self.Template_parser.get("rag", "footer_prompt",)
+
+        chat_history = [
+            self.generation_client.construct_prompt(
+                prompt=system_prompt,
+                role=self.generation_client.enums.SYSTEM.value
+            )
+        ]
+
+        full_prompt =  "\n\n".join([document_prompt, footer_prompt])
+
+        answer =  self.generation_client.generate_text(
+            prompt=full_prompt,
+            chat_history=chat_history
+        )
+
+        return answer, full_prompt, chat_history
+

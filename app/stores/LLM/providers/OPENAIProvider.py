@@ -28,6 +28,8 @@ class OPENAIProvider(LLM_interface):
         else:
             self.client = OpenAI(api_key=self.api_key)
 
+
+        self.enums = OPENAIEnums
         self.logger = logging.getLogger(__name__)
 
     def set_generation_model(self, model_id: str):
@@ -69,7 +71,7 @@ class OPENAIProvider(LLM_interface):
             self.logger.error("ERROR while generating text with OpenAI")
             return None
 
-        return response.choices[0].message["content"]
+        return response.choices[0].message.content
 
 
     def embed_text(self, text: str, document_type: str = None):
