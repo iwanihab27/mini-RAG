@@ -1,10 +1,15 @@
 from logging.config import fileConfig
-
+import sys
+from pathlib import Path
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from app.models.db_schemas.mini_rag.schemes.mini_rag_base import SQLALchemyBase
 
 from alembic import context
+
+project_root = Path(__file__).resolve().parents[5]
+sys.path.insert(0, str(project_root))
+
+from app.models.db_schemas.mini_rag.schemes import SQLALchemyBase
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

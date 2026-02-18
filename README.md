@@ -21,3 +21,8 @@ $ cd docker
 $ cp .env.example .env
 ```
 - update .env with your credentials
+
+### to run the app 
+```bash
+uvicorn app.main:app --reload
+```

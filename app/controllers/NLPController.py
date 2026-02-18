@@ -1,7 +1,7 @@
 from sqlalchemy.testing.suite.test_reflection import metadata
 from app.stores.LLMEnums import DocumentTypeEnums
 from app.controllers.BaseController import BaseController
-from app.models.db_schemas import Project, DataChunk
+from app.models.db_schemas.mini_rag.schemes import project, datachunk, asset, RetrievedDocuments
 from typing import List
 import json
 
@@ -18,11 +18,11 @@ class NLPController(BaseController):
     def create_collection_name(self, project_id: str):
         return f"projects/{project_id}".strip()
 
-    def reset_vector_db_collection(self, project: Project):
+    def reset_vector_db_collection(self, project: project):
         collection_name = self.create_collection_name(project_id=project.project_id)
         return self.vectordb_client.delete_collection(collection_name=collection_name)
 
-    def get_vector_collection_info(self, project: Project):
+    def get_vector_collection_info(self, project: project):
         collection_name = self.create_collection_name(project_id=project.project_id)
         collection_info = self.vectordb_client.get_collection_info(collection_name=collection_name)
 
@@ -30,7 +30,7 @@ class NLPController(BaseController):
             json.dumps(collection_info, default=lambda x : x.__dict__())
         )
 
-    def index_vector_db(self, project: Project, chunks: List[DataChunk],
+    def index_vector_db(self, project: project, chunks: List[datachunk],
                               chunks_ids: List[int],
                               do_reset: bool = False):
 
@@ -63,7 +63,7 @@ class NLPController(BaseController):
 
         return True
 
-    def search_vector_db_collection(self, project: Project, text: str, limit: int = 10):
+    def search_vector_db_collection(self, project: project, text: str, limit: int = 10):
 
         #step1 ger collection name
         collection_name = self.create_collection_name(project_id=project.project_id)
@@ -86,7 +86,7 @@ class NLPController(BaseController):
 
         return result
 
-    def answer_rag_question(self, project: Project, query: str, limit: int = 10):
+    def answer_rag_question(self, project: project, query: str, limit: int = 10):
 
         answer, full_prompt, chat_history = None, None, None
 
@@ -100,20 +100,10 @@ class NLPController(BaseController):
         #step2 construct LLM prompt
         system_prompt = self.Template_parser.get("rag", "system_prompt")
 
-        # document_prompt = []
-        # for idx, doc in enumerate(retrieved_documents):
-        #     document_prompt.append(
-        #         self.Template_parser.get(("rag", "document_prompt", {
-        #             "doc_num": idx + 1,
-        #             "chunk_text": doc.text,
-        #
-        #         })
-        #                                  ))
-
         document_prompt = "\n".join([
             self.Template_parser.get("rag", "document_prompt", {
                 "doc_num": idx + 1,
-                "chunk_text": doc.text,
+                "chunk_text": self.generation_client.process_text(doc.text),
             })
             for idx, doc in enumerate(retrieved_documents)
         ])
