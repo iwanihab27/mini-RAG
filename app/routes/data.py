@@ -71,6 +71,7 @@ async def upload_data(request: Request, project_id: str, file: UploadFile,
     asset_model = await AssetModel.create_instance(
         db_client=request.app.db_client
     )
+
     asset_rescource = Asset(
         asset_project_id=project.id,
         asset_type=AssetTypeEnum.File.value,

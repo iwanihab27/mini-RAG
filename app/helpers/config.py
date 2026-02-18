@@ -13,8 +13,11 @@ class Settings(BaseSettings):
     FILE_DEFAULT_CHUNK_SIZE: Optional[int] = None
     FILE_CHUNK_SIZE: Optional[int] = None
 
-    MONGODB_URL: str
-    MONGODB_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: int
 
     GENERATION_BACKEND:  str
     EMBEDDING_BACKEND: str

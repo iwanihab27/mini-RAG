@@ -2,18 +2,28 @@ services:
 
   mongodb:
     image: mongo:8.0.17
-
     container_name: mongodb
-
     ports:
       - "27007:27017"
-
     volumes:
       - mongodata:/data/db
-
     networks:
       - backend
+    restart: always
 
+  pgvector:
+    image: pgvector/pgvector:pg16
+    container_name: pgvector
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
     restart: always
 
 networks:
@@ -21,5 +31,4 @@ networks:
 
 volumes:
   mongodata:
-
-
+  pgdata:
