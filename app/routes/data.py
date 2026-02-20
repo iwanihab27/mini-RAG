@@ -2,16 +2,17 @@ from fastapi import APIRouter, FastAPI, Depends, UploadFile, File, status, Reque
 from fastapi.responses import JSONResponse
 import os
 from app.helpers.config import get_settings, Settings
-from app.controllers import DataController, ProcessController, ProjectController
+from app.controllers import DataController, ProcessController, ProjectController, NLPController
 import aiofiles
 from app.models.enums import ResponseEnum
 import logging
 from app.routes.schemas.data import ProcessRequest
 from app.models.ProjectModel import ProjectModel
-from app.models.db_schemas.mini_rag.schemes import project, datachunk, asset, RetrievedDocuments
+from app.models.db_schemas.mini_rag.schemes import Project, datachunk, asset, RetrievedDocuments
 from app.models.ChunkModel import ChunkModel
 from app.models.AssetModel import AssetModel
 from app.models.enums.AssetTypeEnum import AssetTypeEnum
+from app.controllers.NLPController import NLPController
 
 
 
@@ -24,7 +25,7 @@ DataRouter = APIRouter(
 )
 
 
-@DataRouter.post("/upload/Project_ID")
+@DataRouter.post("/upload/{project_id}")
 async def upload_data(request: Request, project_id: int, file: UploadFile,
                       app_settings: Settings = Depends(get_settings)):
 
@@ -85,13 +86,13 @@ async def upload_data(request: Request, project_id: int, file: UploadFile,
            status_code=status.HTTP_201_CREATED,
            content={
                    "signal": ResponseEnum.FILE_UPLOAD_SUCCESS.value,
-                   "file_id": str(asset_record.asset_id),
+                   "file_id": str(asset_record.asset_name),
            }
            )
 
 
-@DataRouter.post("/process/Project_ID ")
-async def process_endpoint(Project_id: int, processRequest: ProcessRequest, request: Request):
+@DataRouter.post("/process/{project_id}")
+async def process_endpoint(project_id: int, processRequest: ProcessRequest, request: Request):
 
     chunk_size = processRequest.chunk_size
     overlap_size = processRequest.overlap_size
@@ -102,15 +103,23 @@ async def process_endpoint(Project_id: int, processRequest: ProcessRequest, requ
     )
 
     project = await project_model.get_project_or_create_one(
-        project_id=Project_id
+        project_id=project_id
     )
+
+    nlp_controller = NLPController(
+        vectordb_client=request.app.vectordb_client,
+        generation_client=request.app.generation_client,
+        embedding_client=request.app.embedding_client,
+        TemplateParser=request.app.TemplateParser,
+    )
+
     asset_model = await AssetModel.create_instance(
         db_client=request.app.db_client
     )
 
     project_file_ids = {}
     if processRequest.file_id:
-        asset_record = await AssetModel.get_asset_record(
+        asset_record = await asset_model.get_asset_record(
             asset_project_id=project.project_id,
             asset_name=processRequest.file_id
         )
@@ -128,9 +137,6 @@ async def process_endpoint(Project_id: int, processRequest: ProcessRequest, requ
             asset_record.asset_id: asset_record.asset_name
         }
     else:
-        asset_model = await AssetModel.create_instance(
-            db_client=request.app.db_client
-        )
 
         project_files = await asset_model.get_all_project_assets(
             asset_project_id=project.project_id,
@@ -150,7 +156,7 @@ async def process_endpoint(Project_id: int, processRequest: ProcessRequest, requ
             }
         )
 
-    process_controller = ProcessController(project_id=Project_id)
+    process_controller = ProcessController(project_id=project_id)
 
     no_records = 0
     no_files = 0
@@ -160,6 +166,9 @@ async def process_endpoint(Project_id: int, processRequest: ProcessRequest, requ
     )
 
     if do_reset == 1:
+        collection_name = nlp_controller.create_collection_name(project_id=project.project_id)
+        _ = await request.app.vectordb_client.delete_collection(collection_name=collection_name)
+
         _ = await chunk_model.delete_chunks_by_project_id(
             project_id=project.project_id
         )

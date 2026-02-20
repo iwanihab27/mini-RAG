@@ -53,7 +53,7 @@ class OPENAIProvider(LLM_interface):
             self.logger.error("OpenAI generation model was not set")
             return None
 
-        max_output_token = max_output_token if max_output_token else self.default_max_output_tokens
+        max_output_token = max_output_token if max_output_token else self.default_generation_max_output_tokens
         temperature = temperature if temperature else self.default_generation_temperature
 
         chat_history.append(

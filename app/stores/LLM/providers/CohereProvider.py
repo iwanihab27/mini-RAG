@@ -82,16 +82,16 @@ class CohereProvider(LLM_interface):
 
         response = self.client.embed(
             model = self.embedding_model_id,
-            text = [self.process_text(text)],
+            texts = [self.process_text(text)],
             input_type = input_type,
-            embedding_type=['float'],
+            embedding_types=['float'],
         )
 
-        if not response or response.embedding or not response.embedding.float:
+        if not response or not response.embeddings or not response.embeddings.float:
             self.logger.error("error while embedding text with cohere")
             return None
 
-        return response.embedding.float[0]
+        return response.embeddings.float[0]
 
     def construct_prompt(self, prompt: str, role: str):
         return {

@@ -8,6 +8,7 @@ from app.models.enums import ResponseEnum
 from app.models.ProjectModel import ProjectModel
 from app.models.ChunkModel import ChunkModel
 import json
+from tqdm.auto import tqdm
 
 
 logger = logging.getLogger('uvicorn.error')
@@ -27,10 +28,6 @@ async def index_project(request: Request, project_id: int, push_request: PushReq
 
     chunkmodel = await ChunkModel.create_instance(
         db_client=request.app.db_client,
-    )
-
-    project = await project_model.get_project_or_create_one(
-        project_id=project_id
     )
 
     project = await project_model.get_project_or_create_one(
@@ -57,6 +54,17 @@ async def index_project(request: Request, project_id: int, push_request: PushReq
     inserted_items_count = 0
     idx = 0
 
+    collection_name = nlp_controller.create_collection_name(project_id=project.project_id)
+
+    _ = request.app.vectordb_client.create_collection(
+        collection_name=collection_name,
+        embedding_size=request.app.embedding_client.embedding_size,
+        do_reset=push_request.do_reset,
+    )
+
+    total_chunks_count = await chunkmodel.get_total_chunks_count(project_id=project.project_id)
+    pbar = tqdm(total=total_chunks_count, desc="Vector Indexing", position=0)
+
     while has_records:
         page_chunks = await chunkmodel.get_project_chunks(project_id=project.project_id,  page_no=page_no)
         if len(page_chunks):
@@ -68,7 +76,7 @@ async def index_project(request: Request, project_id: int, push_request: PushReq
         chunk_ids = list(range(idx, idx + len(page_chunks)))
         idx += len(page_chunks)
 
-        is_inserted = nlp_controller.index_into_vector_db(
+        is_inserted = nlp_controller.index_vector_db(
             project=project,
             chunks=page_chunks,
             do_reset=push_request.do_reset,
@@ -136,7 +144,7 @@ async def search_index(request: Request, project_id: int, search_request: Search
     )
 
     results = nlp_controller.search_vector_db_collection(
-        project=project, text=search_request.text, limit=search_request.limt
+        project=project, text=search_request.text, limit=search_request.limit
     )
 
     if not results:

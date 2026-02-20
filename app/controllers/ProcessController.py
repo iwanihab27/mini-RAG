@@ -60,7 +60,7 @@ class ProcessController(BaseController):
 
         text_spliter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
-            overlap_size=overlap_size,
+            chunk_overlap=overlap_size,
             length_function = len,
         )
 
@@ -70,7 +70,7 @@ class ProcessController(BaseController):
         ]
 
         file_content_metadata = [
-            rec.page_content
+            rec.metadata
             for rec in file_content
         ]
 

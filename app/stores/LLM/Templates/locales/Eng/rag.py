@@ -1,6 +1,5 @@
 from string import Template
 
-from jinja2 import Template
 
 #### RAG PROMPTS ####
 

@@ -15,8 +15,8 @@ class Project(SQLALchemyBase):
     create_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
 
-    chunk = relationship("datachunk", back_populates="Project")
-    asset = relationship("asset", back_populates="Project")
+    chunk = relationship("datachunk", back_populates="project")
+    asset = relationship("asset", back_populates="project")
 
     
 

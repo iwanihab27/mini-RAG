@@ -54,7 +54,7 @@ class DataController(BaseController):
 
     def get_clean_filename(self, orig_filename: str):
 
-        cleaned_filename = re.sub(r'[^w.]', '', orig_filename.strip())
+        cleaned_filename = re.sub(r'[^\w.]', '', orig_filename.strip())
         # clean from everything except _
 
         cleaned_filename = cleaned_filename.replace(' ', '_')

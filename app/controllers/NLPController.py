@@ -4,6 +4,7 @@ from app.controllers.BaseController import BaseController
 from app.models.db_schemas.mini_rag.schemes import project, datachunk, asset, RetrievedDocuments
 from typing import List
 import json
+import time
 
 
 class NLPController(BaseController):
@@ -27,7 +28,7 @@ class NLPController(BaseController):
         collection_info = self.vectordb_client.get_collection_info(collection_name=collection_name)
 
         return json.loads(
-            json.dumps(collection_info, default=lambda x : x.__dict__())
+            json.dumps(collection_info, default=lambda x : x.__dict__)
         )
 
     def index_vector_db(self, project: project, chunks: List[datachunk],
@@ -40,11 +41,11 @@ class NLPController(BaseController):
         # step 2 manage items
         texts = [ c.chunk_text for c in chunks ]
         metadata = [ c.chunk_metadata for c in chunks ]
-        vectors = [
-            self.embedding_client.embed_text(text=text,
-                                             document_type=DocumentTypeEnums.DOCUMENT.value)
-            for text in texts
-        ]
+        vectors = []
+        for text in texts:
+            vector = self.embedding_client.embed_text(text=text, document_type=DocumentTypeEnums.DOCUMENT.value)
+            vectors.append(vector)
+            time.sleep(0.7)
 
         # step 3 create collection if not exist
         _ = self.vectordb_client.create_collection(
@@ -55,10 +56,10 @@ class NLPController(BaseController):
         # step 4 insert into db
         _ = self.vectordb_client.insert_many(
             collection_name=collection_name,
-            texts=texts,
+            text=texts,
             metadata=metadata,
-            vectors=vectors,
-            chunks_ids=chunks_ids,
+            vector=vectors,
+            record_ids=chunks_ids,
         )
 
         return True
@@ -98,17 +99,17 @@ class NLPController(BaseController):
             return answer, full_prompt, chat_history
 
         #step2 construct LLM prompt
-        system_prompt = self.Template_parser.get("rag", "system_prompt")
+        system_prompt = self.TemplateParser.get("rag", "system_prompt")
 
         document_prompt = "\n".join([
-            self.Template_parser.get("rag", "document_prompt", {
+            self.TemplateParser.get("rag", "document_prompt", {
                 "doc_num": idx + 1,
                 "chunk_text": self.generation_client.process_text(doc.text),
             })
             for idx, doc in enumerate(retrieved_documents)
         ])
 
-        footer_prompt =self.Template_parser.get("rag", "footer_prompt", {
+        footer_prompt =self.TemplateParser.get("rag", "footer_prompt", {
             "query": query,
         })
 
