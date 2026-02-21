@@ -163,7 +163,7 @@ async def search_index(request: Request, project_id: int, search_request: Search
     )
 
 @NLPRouter.post("/index/answer/{project_id}")
-async def search_index(request: Request, project_id: int, search_request: SearchRequest):
+async def answer_index(request: Request, project_id: int, search_request: SearchRequest):
     project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client,
     )
