@@ -33,4 +33,7 @@ mongodb
 env/.env*
 !env/.env.example.postgres
 
-alembic.ini
+alembic.inienv/
+venv/
+__pycache__/
+*.pyc
