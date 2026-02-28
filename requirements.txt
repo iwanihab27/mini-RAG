@@ -12,7 +12,7 @@ pymupdf==1.24.9
 motor==3.7.1
 pymongo>=4.9,<5.0
 langchain[unstructured]>=1.2.5,<2.0.0
-openai==1.66.3
+openai==1.75.0
 cohere==5.5.8
 qdrant-client==1.10.1
 httpx==0.27.0
@@ -23,3 +23,10 @@ psycopg2==2.9.10
 unstructured>=0.10.0
 pgvector==0.4.0
 nltk==3.9.1
+
+# monitoring and metrics
+prometheus-client==0.21.0
+starlette-exporter==0.23.0
+
+# health checks
+fastapi-health==0.4.0

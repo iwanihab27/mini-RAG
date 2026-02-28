@@ -9,12 +9,16 @@ from app.stores.LLM.Templates.Template_parser import TemplateParser
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
+# import metrics setup
+from app.utils.metrics import setup_metrics
 
 load_dotenv(".env")
 
 app = FastAPI(
     title=os.getenv("APP_NAME", "mini-rag"),
     version=os.getenv("APP_VERSION", "0.1"))
+
+setup_metrics(app)
 
 
 async def startup_span():

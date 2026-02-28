@@ -28,3 +28,9 @@ dist/
 
 #db
 mongodb
+
+
+env/.env*
+!env/.env.example.postgres
+
+alembic.ini
