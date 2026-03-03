@@ -13,7 +13,7 @@ from app.models.ChunkModel import ChunkModel
 from app.models.AssetModel import AssetModel
 from app.models.enums.AssetTypeEnum import AssetTypeEnum
 from app.controllers.NLPController import NLPController
-
+from app.tasks.file_processing import process_project_files
 
 
 logger = logging.getLogger('uvicorn.error')  #34an ybnlk fel server el mo4kla
@@ -97,6 +97,21 @@ async def process_endpoint(project_id: int, processRequest: ProcessRequest, requ
     chunk_size = processRequest.chunk_size
     overlap_size = processRequest.overlap_size
     do_reset = processRequest.do_reset
+
+    task = process_project_files.delay(
+        project_id=project_id,
+        file_id=processRequest.file_id,
+        chunk_size=chunk_size,
+        overlap_size=overlap_size,
+        do_reset=do_reset,
+    )
+
+    return JSONResponse(
+        content={
+            "signal": ResponseEnum.PROCESSING_SUCCESS.value,
+            "task_id": task.id,
+        }
+    )
 
     project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
