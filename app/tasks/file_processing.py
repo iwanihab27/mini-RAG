@@ -36,7 +36,8 @@ async def _process_project_files(task_instance, project_id: int,
     try:
 
         (db_engine, db_client, llm_provider_factory, vectordb_provider_factory,
-        generation_client, embedding_client, vectordb_client, template_parser) = get_setup_utilits()
+        generation_client, embedding_client, vectordb_client, template_parser) = get_setup_utilits() # from the startup
+                                                                                                    #  of the celery
 
         project_model = await ProjectModel.create_instance(
             db_client=db_client
