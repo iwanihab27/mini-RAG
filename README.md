@@ -229,3 +229,9 @@ If you see connection errors when starting the services:
 ```bash
 python -m celery -A app.celery_app worker --queues=default,mail_server_queue --loglevel=info
 ```
+
+# _______________________
+
+```aiignore
+uvicorn app.main:app --host 0.0.0.0 --port 5000
+```

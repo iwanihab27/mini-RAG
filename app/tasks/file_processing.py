@@ -1,6 +1,6 @@
 from app.celery_app import celery_app, get_setup_utilits
 from app.helpers.config import get_settings, Settings
-from app.controllers import DataController, ProcessController, ProjectController, NLPController
+from app.controllers import DataController, ProcessController, ProjectController
 from app.models.enums import ResponseEnum
 from app.models.enums.AssetTypeEnum import AssetTypeEnum
 from app.models.ProjectModel import ProjectModel
@@ -11,12 +11,13 @@ from app.stores.LLM.Templates.Template_parser import TemplateParser
 from app.routes.schemas.data import ProcessRequest
 import asyncio
 import logging
+from app.controllers.NLPController import NLPController
 
 logger = logging.getLogger('__name__')
 
 
 @celery_app.task(bind=True, name="app.tasks.file_processing.process_project_files",
-                 autotry_for=(Exception),
+                 autoretry_for=(Exception,),
                  retry_kwargs={'max_retries': 3, 'countdown': 60})
 def process_project_files(self, project_id: int, file_id: int, chunk_size: int
                                 , overlap_size: int, do_reset: int,):
@@ -36,7 +37,7 @@ async def _process_project_files(task_instance, project_id: int,
     try:
 
         (db_engine, db_client, llm_provider_factory, vectordb_provider_factory,
-        generation_client, embedding_client, vectordb_client, template_parser) = get_setup_utilits() # from the startup
+        generation_client, embedding_client, vectordb_client, template_parser) = await get_setup_utilits() # from the startup
                                                                                                     #  of the celery
 
         project_model = await ProjectModel.create_instance(
@@ -51,7 +52,7 @@ async def _process_project_files(task_instance, project_id: int,
             vectordb_client=vectordb_client,
             generation_client=generation_client,
             embedding_client=embedding_client,
-            TemplateParser=TemplateParser,
+            TemplateParser=template_parser,
         )
 
         asset_model = await AssetModel.create_instance(
