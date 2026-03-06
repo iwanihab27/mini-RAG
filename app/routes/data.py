@@ -14,6 +14,7 @@ from app.models.AssetModel import AssetModel
 from app.models.enums.AssetTypeEnum import AssetTypeEnum
 from app.controllers.NLPController import NLPController
 from app.tasks.file_processing import process_project_files
+from app.tasks.process_workflow import process_and_push_workflow
 
 
 logger = logging.getLogger('uvicorn.error')  #34an ybnlk fel server el mo4kla
@@ -113,3 +114,27 @@ async def process_endpoint(project_id: int, processRequest: ProcessRequest, requ
             "task_id": task.id,
         }
     )
+
+@DataRouter.post("/process-and-push/{project_id}")
+async def process_and_push_endpoint(project_id: int, processRequest: ProcessRequest, request: Request):
+
+    chunk_size = processRequest.chunk_size
+    overlap_size = processRequest.overlap_size
+    do_reset = processRequest.do_reset
+
+    wokflow_task = process_and_push_workflow.delay(
+            project_id=project_id,
+            file_id=processRequest.file_id,
+            chunk_size=chunk_size,
+            overlap_size=overlap_size,
+            do_reset=do_reset,
+        )
+
+    return JSONResponse(
+        status_code=status.HTTP_202_ACCEPTED,
+        content={
+            "signal": ResponseEnum.PROCESS_AND_PUSH_WORKFLOW_READY.value,
+            "wokflow_task_id": wokflow_task.id,
+        }
+    )
+

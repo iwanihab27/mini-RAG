@@ -1,4 +1,6 @@
 from celery import Celery
+from celery.schedules import crontab
+
 from app.helpers.config import get_settings
 from app.stores.LLMProviderFactory import LLMProviderFactory
 from app.stores.vectordb.VectorDBProviderFactory import VectorDBProvider
@@ -51,7 +53,10 @@ celery_app = Celery(
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
     include=[
-        "app.tasks.file_processing"
+        "app.tasks.file_processing",
+        "app.tasks.data_indexing",
+        "app.tasks.process_workflow",
+        "app.tasks.maintenance",
     ]
 )
 
@@ -84,8 +89,25 @@ celery_app.conf.update(
     worker_cancel_long_running_tasks_on_connection_loss=True,
 
     task_routes={
-    "app.tasks.file_processing.process_project_files": {"queue": "file_processing"},
-    }
+        "app.tasks.file_processing.process_project_files": {"queue": "file_processing"},
+        "app.tasks.data_indexing.index_data_content": {"queue": "data_indexing"},
+        "app.tasks.process_workflow.process_and_push_workflow": {"queue": "process_workflow"},
+        "app.tasks,maintenance.clean_celery_executions_table": {"queue": "default"},# bec it runs in the background
+    },
+
+    beat_schedule = {
+        'cleanup-old-task-records': {
+            'task': 'app.tasks,maintenance.clean_celery_executions_table',
+
+            'schedule': 86400,
+
+            'args': ()
+
+        }
+    },
+
+    timezone='UTC',
+
 )
 
 celery_app.conf.task_default_queue = "default"  # like a lane for tasks

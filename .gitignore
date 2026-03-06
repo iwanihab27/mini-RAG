@@ -2,16 +2,18 @@
 __pycache__/
 *.py[codz]
 *$py.class
+*.pyc
 
 # Virtual environments
 .venv/
-env/
 venv/
 ENV/
 
 # Environment variables
 .env
 .envrc
+env/.env*
+!env/.env.example*
 
 # Distribution / packaging
 build/
@@ -26,14 +28,13 @@ dist/
 # Others
 *.log
 
-#db
-mongodb
+# DB
+mongodb/
 
+# Alembic
+alembic.ini
+!alembic.example.ini
 
-env/.env*
-!env/.env.example.postgres
-
-alembic.inienv/
-venv/
-__pycache__/
-*.pyc
+# Assets
+app/app/
+app/assets/files/

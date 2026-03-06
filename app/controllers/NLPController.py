@@ -83,7 +83,7 @@ class NLPController(BaseController):
             return False
 
         #step3 do semantic search
-        result = await self.vectorsdb_client.search_by_vectors(
+        result = await self.vectordb_client.search_by_vectors(
             collection_name=collection_name,
             vectors=query_vector,
             limit=limit,

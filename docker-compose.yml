@@ -18,6 +18,66 @@ services:
     volumes:
       - ./app/assets/files:/app/app/assets/files
 
+  # celery worker
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery-worker
+    volumes:
+      - ./app/assets/files:/app/app/assets/files
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      pgvector:
+        condition: service_healthy
+    env_file:
+      - ./env/.env.app
+    command: ["python", "-m", "celery", "-A", "app.celery_app", "worker", "queues=default,file_processing,data_indexing", "--loglevel=info"]
+
+  # celery beat
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery-beat
+    volumes:
+      - ./app/assets/files:/app/app/assets/files
+      - celery_beat_data:/app/celerybeat
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - ./env/.env.app
+    command: [ "python", "-m", "celery", "-A", "app.celery_app", "beat", "--loglevel=info" ]
+
+  # flower
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flower
+    ports:
+      - "5555:5555"
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - rabbitmq
+      - celery-worker
+    env_file:
+      - ./env/.env.app
+    command: [ "python", "-m", "celery", "-A", "app.celery_app", "flower", "--conf=flowerconfig.py" ]
 
   # nginx services
   nginx:
@@ -190,3 +250,4 @@ volumes:
   grafana_data:
   rabbitmq_data:
   redis_data:
+  celery_beat_data:

@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c1c1d7b-d8d2-441a-8e75-67881da930a7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/models/db_schemas/mini_rag/schemes/celery_task_execution.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/tasks/data_indexing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/tasks/maintenance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/tasks/process_workflow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/utils/idempotency_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flowerconfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/mini-rag-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mini-rag-app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/celery_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/celery_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/NLPController.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/NLPController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/enums/ResponsEnums.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/enums/ResponsEnums.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/nlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/nlp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/tasks/file_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tasks/file_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +68,7 @@
     &quot;SHELLCHECK.PATH&quot;: &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\PyCharm2025.3\\plugins\\Shell Script\\shellcheck.exe&quot;,
     &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/mini-rag-app/env&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/mini-rag-app/app/models/db_schemas/mini_rag/schemes&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -67,6 +80,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Downloads\mini-rag-app\app\models\db_schemas\mini_rag\schemes" />
       <recent name="C:\Users\user\Downloads\mini-rag-app\env" />
       <recent name="C:\Users\user\Downloads\mini-rag-app\nginx" />
       <recent name="C:\Users\user\Downloads\mini-rag-app\nginx\default.conf" />

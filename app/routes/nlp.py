@@ -9,6 +9,7 @@ from app.models.ProjectModel import ProjectModel
 from app.models.ChunkModel import ChunkModel
 import json
 from tqdm.auto import tqdm
+from app.tasks.data_indexing import index_data_content
 
 
 logger = logging.getLogger('uvicorn.error')
@@ -22,81 +23,15 @@ NLPRouter = APIRouter(
 @NLPRouter.post("/index/push/{project_id}")
 async def index_project(request: Request, project_id: int, push_request: PushRequest):
 
-    project_model = await ProjectModel.create_instance(
-        db_client=request.app.db_client,
-    )
-
-    chunkmodel = await ChunkModel.create_instance(
-        db_client=request.app.db_client,
-    )
-
-    project = await project_model.get_project_or_create_one(
-        project_id=project_id
-    )
-
-    if not project:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={
-                "signal": ResponseEnum.PROJECT_NOT_FOUND.value,
-            }
-        )
-
-    nlp_controller = NLPController(
-        vectordb_client=request.app.vectordb_client,
-        generation_client=request.app.generation_client,
-        embedding_client=request.app.embedding_client,
-        TemplateParser=request.app.TemplateParser,
-    )
-
-    has_records = True
-    page_no = 1
-    inserted_items_count = 0
-    idx = 0
-
-    collection_name = nlp_controller.create_collection_name(project_id=project.project_id)
-
-    _ = await request.app.vectordb_client.create_collection(
-        collection_name=collection_name,
-        embedding_size=request.app.embedding_client.embedding_size,
+    task = index_data_content.delay(
+        project_id=project_id,
         do_reset=push_request.do_reset,
     )
 
-    total_chunks_count = await chunkmodel.get_total_chunks_count(project_id=project.project_id)
-    pbar = tqdm(total=total_chunks_count, desc="Vector Indexing", position=0) # progress bar
-
-    while has_records:
-        page_chunks = await chunkmodel.get_project_chunks(project_id=project.project_id,  page_no=page_no)
-        if len(page_chunks):
-            page_no += 1
-        if not page_chunks or len(page_chunks) == 0:
-            has_records = False
-            break
-
-        chunk_ids = [c.chunk_id for c in page_chunks]
-        idx += len(page_chunks)
-
-        is_inserted = await nlp_controller.index_vector_db(
-            project=project,
-            chunks=page_chunks,
-            chunks_ids=chunk_ids,
-        )
-
-        if not is_inserted:
-            return JSONResponse(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                content={
-                    "signal": ResponseEnum.INSERT_INTO_VECTOR_DB_ERROR.value,
-                }
-            )
-
-        pbar.update(len(page_chunks))
-        inserted_items_count += len(page_chunks)
-
     return JSONResponse(
         content={
-            "signal": ResponseEnum.INSERT_INTO_VECTOR_DB_SUCCESS.value,
-            "inserted_items_count": inserted_items_count
+            "signal": ResponseEnum.DATA_PUSH_TASK_READY.value,
+            "task_id": task.id
         }
     )
 
